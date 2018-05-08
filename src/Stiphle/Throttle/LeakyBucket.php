@@ -71,8 +71,41 @@ class LeakyBucket implements ThrottleInterface
         $this->storage->unlock($key);
         return $wait;
     }
-
+  
+  /**
+   * Gatekeep user, rejecting their request instead of sleeping
+   *
+   * @param string $key  - A unique key for what we're throttling
+   * @param int $limit   - How many are allowed
+   * @param int $milliseconds - In this many milliseconds
+   * @return int
+   */
+  public function gatekeep($key, $limit, $milliseconds)
+  {
+    $key = $this->getStorageKey($key, $limit, $milliseconds);
+    
+    // Get Estimate to see if they should wait.  If wait time > 0, 
+    // they are exceeding rate limit (so return false)
+    
+    if ($this->getEstimate($key, $limit, $milliseconds) > 0) {
+      return false;
+    }
+    
     /**
+     * Lock, record and release
+     */
+    $this->storage->lock($key);
+    $newRatio = $this->getNewRatio($key, $limit, $milliseconds);
+    $this->setLastRatio($key, $newRatio);
+    $this->setLastRequest($key, microtime(1));
+    $this->storage->unlock($key);
+
+    // They passed and we updated the rate limits.
+    return true;
+  }
+  
+  
+  /**
      * Get Estimate (doesn't require lock)
      *
      * How long would I have to wait to make a request?
