@@ -40,7 +40,7 @@ class LeakyBucket implements ThrottleInterface
     }
 
     /**
-     * Throttle
+     * Throttle the users... using sleep to slow them down to the rate limit
      *
      * @param string $key  - A unique key for what we're throttling
      * @param int $limit   - How many are allowed
