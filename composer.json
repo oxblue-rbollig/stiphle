@@ -1,15 +1,20 @@
 {
-    "name": "davedevelopment/stiphle",
+    "name": "oxblue-rbollig/stiphle",
     "type": "library",
     "description": "Simple rate limiting/throttling for php",
     "keywords": ["throttle", "throttling", "rate limiting", "rate limit"],
-    "homepage": "http://github.com/davedevelopment/stiphle",
+    "homepage": "http://github.com/oxblue-rbollig/stiphle",
     "license": "MIT",
     "authors": [{
         "name": "Dave Marshall",
         "email": "dave.marshall@atstsolutions.co.uk",
         "homepage": "http://davedevelopment.co.uk"
-    }],
+      },{
+        "name": "Randall Bollig",
+        "email": "rbollig@oxblue.com",
+        "homepage": "http://oxblue.com"
+      }
+    ],
 
     "require": {
         "php": ">=5.3.1"
