@@ -1,11 +1,15 @@
 Stiphle
 ======
 
+This is a fork of davedevelopment/stiphle.  Rather than making users wait for
+their rate limit to fall in range, we wanted the ability to return a 
+rate-exceeded message.
+
 Install via Composer
 -------
 
 ```
-composer require davedevelopment/stiphle
+composer require oxblue-rbollig/stiphle
 ```
 
 What is it?
