@@ -73,14 +73,15 @@ class LeakyBucket implements ThrottleInterface
     }
   
   /**
-   * Gatekeep user, rejecting their request instead of sleeping
+   * Check rate limit, rejecting their request instead of sleeping
+   * Returns true if within limit (allow) false if exceeded (reject)
    *
    * @param string $key  - A unique key for what we're throttling
    * @param int $limit   - How many are allowed
    * @param int $milliseconds - In this many milliseconds
    * @return int
    */
-  public function gatekeep($key, $limit, $milliseconds)
+  public function checkWithinLimit($key, $limit, $milliseconds)
   {
     $key = $this->getStorageKey($key, $limit, $milliseconds);
     
