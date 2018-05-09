@@ -83,7 +83,6 @@ class LeakyBucket implements ThrottleInterface
    */
   public function checkWithinLimit($key, $limit, $milliseconds)
   {
-    $key = $this->getStorageKey($key, $limit, $milliseconds);
     
     // Get Estimate to see if they should wait.  If wait time > 0, 
     // they are exceeding rate limit (so return false)
@@ -95,6 +94,7 @@ class LeakyBucket implements ThrottleInterface
     /**
      * Lock, record and release
      */
+    $key = $this->getStorageKey($key, $limit, $milliseconds);
     $this->storage->lock($key);
     $newRatio = $this->getNewRatio($key, $limit, $milliseconds);
     $this->setLastRatio($key, $newRatio);
